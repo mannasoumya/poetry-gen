@@ -45,14 +45,14 @@ app.listen(port, () => {
 function generate(lines = 6) {
   try {
     let file_str = fs.readFileSync(
-      "Rupi Kaur - Milk and Honey-Andrews McMeel Publishing (2015).txt",
+      "../../data/r_p_poem.txt",
       "utf8"
     );
     let all_lines = processString(file_str);
     let newPoem = generatePoem(all_lines, lines);
     // console.log(newPoem);
     fs.appendFile(
-      "newPoems.txt",
+      "../../data/newPoems.txt",
       newPoem + "\n-------------------------------------\n",
       function (err) {
         if (err) throw err;
@@ -81,3 +81,4 @@ function generatePoem(all_lines, poem_length) {
   }
   return newPoem;
 }
+module.exports = app
