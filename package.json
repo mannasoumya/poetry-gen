@@ -4,6 +4,7 @@
   "description": "Online Random text generator",
   "main": "gen_ran.js",
   "dependencies": {
+    "express": "^4.17.1",
     "remove-blank-lines": "^1.4.1"
   },
   "devDependencies": {},
