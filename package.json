@@ -1,0 +1,26 @@
+{
+  "name": "poetry_analysis",
+  "version": "1.0.0",
+  "description": "Online Random text generator",
+  "main": "gen_ran.js",
+  "dependencies": {
+    "remove-blank-lines": "^1.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mannasoumya/poetry-gen.git"
+  },
+  "keywords": [
+    "poetry"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mannasoumya/poetry-gen/issues"
+  },
+  "homepage": "https://github.com/mannasoumya/poetry-gen#readme"
+}
