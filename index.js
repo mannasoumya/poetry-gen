@@ -1,19 +1,32 @@
 const ran_gen = require("./pseudo-random");
-// const removeEmptyLines = require("remove-blank-lines");
-console.log();
 const fs = require("fs");
 const app = require("express")();
 const bodyParser = require("body-parser");
-const port = 7890;
+const port = process.env.PORT || 7890;
+const fetch = require('node-fetch');
+var path = require('path');
+var cors= require('cors')
+let data="";
+
+var corsOptions = {
+  origin: 'https://poetry-analysis.vercel.app',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
+fetch('http://m.uploadedit.com/busd/1616608485499.txt').then(r=>r.text()).then(r=> data=r);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors());
 
 app.get("/", function (req, res) {
-  res.send("Online Poetry");
+  // res.sendFile('./public/index.html');
+  res.sendFile(path.join(__dirname + '/public/index.html'));
 });
 
-app.get("/generate", (req, res) => {
+// app.use(express.static('public'))
+
+app.get("/generate", cors(corsOptions),(req, res) => {
   res.setHeader("Content-Type", "text/html");
   res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
   let no_of_lines = 6;
@@ -33,32 +46,28 @@ app.get("/generate", (req, res) => {
   res.send(`${poem_html}`);
 });
 
-app.get("/api/item/:slug", (req, res) => {
-  const { slug } = req.params;
-  res.end(`Item: ${slug}`);
-});
-
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
 
 function generate(lines = 6) {
   try {
-    let file_str = fs.readFileSync(
-      "../../data/r_p_poem.txt",
-      "utf8"
-    );
+    // let file_str = fs.readFileSync(
+    //   "./data/r_p_poem.txt",
+    //   "utf8"
+    // );
+    let file_str = data;
     let all_lines = processString(file_str);
     let newPoem = generatePoem(all_lines, lines);
     // console.log(newPoem);
-    fs.appendFile(
-      "../../data/newPoems.txt",
-      newPoem + "\n-------------------------------------\n",
-      function (err) {
-        if (err) throw err;
-        console.log("Saved!");
-      }
-    );
+    // fs.appendFile(
+    //   "./data/newPoems.txt",
+    //   newPoem + "\n-------------------------------------\n",
+    //   function (err) {
+    //     if (err) throw err;
+    //     console.log("Saved!");
+    //   }
+    // );
     return newPoem;
   } catch (err) {
     console.error(err);
